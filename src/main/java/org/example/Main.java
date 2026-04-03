@@ -1,5 +1,8 @@
 package org.example;
 
+import org.example.DeteccionColor.ArbolColores;
+import org.example.DeteccionColor.ObtenerImagen;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
@@ -21,5 +24,8 @@ public class Main {
         5.- miramos como funciona una libreria
 
          */
+
+        ArbolColores arbol = new ArbolColores("src/ImagenEntrenamiento/Frieren");
+        arbol.crearDatos(0.1f);
     }
 }
