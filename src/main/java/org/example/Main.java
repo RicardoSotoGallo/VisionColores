@@ -1,7 +1,12 @@
 package org.example;
 
-import org.example.DeteccionColor.ArbolColores;
-import org.example.DeteccionColor.ObtenerImagen;
+import org.example.DeteccionColor.*;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.HashMap;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -25,7 +30,38 @@ public class Main {
 
          */
 
-        ArbolColores arbol = new ArbolColores("src/ImagenEntrenamiento/Frieren");
-        arbol.crearDatos(0.1f);
+
+        /*arbol.obtenerTodaRaizes(0f);
+        BufferedImage entrada;
+        try {
+            File archivo = new File("src/ImagenEntrenamiento/Frieren/Imagen/img.png");
+            entrada = ImageIO.read(archivo);
+            //arbol.analizarUnaSeleccion(entrada , "src/ImagenEntrenamiento/Frieren/Ficheros" , "DosColores");
+            arbol.analizarTodoSeleccion(entrada , "src/ImagenEntrenamiento/Frieren/Ficheros");
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        arbol.guardarDatos();*/
+        ArbolColores arbol = new ArbolColores("src/ImagenEntrenamiento/Wikipedia");
+        arbol.obtenerTodaRaizes(0);
+        arbol.guardarDatos();
+        //arbol.obtenerDatos();
+
+        //arbol.diccionarioRaices.get("Rosa").showArbol("");
+
+        BufferedImage entrada;
+        try {
+            File archivo = new File("src/ImagenEntrenamiento/Wikipedia/Ficheros/imgTest.png");
+            entrada = ImageIO.read(archivo);
+            //arbol.analizarUnaSeleccion(entrada , "src/ImagenEntrenamiento/Frieren/Ficheros" , "DosColores");
+            arbol.analizarTodoSeleccion(entrada , "src/ImagenEntrenamiento/Wikipedia/Ficheros");
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 }
