@@ -4,21 +4,51 @@
 ![Status](https://img.shields.io/badge/status-en%20desarrollo-yellow)
 ![License](https://img.shields.io/badge/license-educational-blue)
 
-Sistema de detección de colores en imágenes desarrollado en Java, basado en aprendizaje a partir de datos y técnicas como lógica difusa y estructuras tipo árbol de decisión.
+Sistema de detección de colores en imágenes desarrollado en Java, basado en aprendizaje supervisado, lógica difusa y estructuras tipo árbol de decisión.
 
 ---
 
 ## 📌 Descripción
 
-**VisionColores** es un proyecto que permite entrenar un sistema para reconocer y clasificar colores a partir de imágenes, y posteriormente aplicar ese conocimiento a nuevas imágenes.
+**VisionColores** es un proyecto que permite entrenar un sistema para reconocer colores específicos dentro de imágenes y aplicar ese conocimiento a nuevas imágenes.
 
 El enfoque combina:
 
-- 🌈 **Procesamiento de imágenes**
-- 🧠 **Lógica difusa (Fuzzy Logic)** para tratar la incertidumbre en los colores
-- 🌳 **Árbol de decisión** (`ArbolColores`) para estructurar y organizar el aprendizaje
+- 🌈 Procesamiento de imágenes
+- 🧠 Lógica difusa (Fuzzy Logic)
+- 🌳 Árbol de decisión (`ArbolColores`)
+- 🎯 Aprendizaje supervisado mediante máscaras
 
-> ⚠️ Nota: Solo la carpeta `DeteccionColor` contiene la lógica relevante del proyecto.
+---
+
+## 🧠 Idea principal del proyecto
+
+El sistema aprende colores a partir de **dos imágenes**:
+
+1. 🖼️ **Imagen original (color)**
+2. ⚫⚪ **Imagen en blanco y negro (máscara)**
+
+### 🔍 ¿Cómo funciona la máscara?
+
+- ⚪ **Blanco (valor = 1)** → zonas que **SÍ se usan para aprender**
+- ⚫ **Negro (valor = 0)** → zonas que **NO se usan**
+
+Esto permite indicar exactamente qué partes de la imagen contienen el color que queremos entrenar.
+
+---
+
+## 🎯 Ejemplo de uso
+
+Caso práctico:
+
+- Se entrena el sistema para aprender el **color azul de Wikipedia**
+- Se proporciona:
+  - Imagen original
+  - Máscara indicando solo las zonas azules
+- Luego se prueba con una imagen nueva
+
+Resultado:
+➡️ El sistema detecta automáticamente ese color en otras imágenes
 
 ---
 
@@ -30,11 +60,8 @@ src/
     └── java/
         ├── Main.java
         └── DeteccionColor/
-            ├── (clases de detección de color)
+            ├── (lógica del sistema)
 ```
-
-- `Main.java` → Punto de entrada del programa  
-- `DeteccionColor/` → Núcleo del sistema (procesamiento y lógica)
 
 ---
 
@@ -46,9 +73,6 @@ src/
 ArbolColores arbol = new ArbolColores("src/ImagenEntrenamiento/Wikipedia");
 ```
 
-- Se indica la carpeta con las imágenes de entrenamiento
-- A partir de aquí se construye el modelo
-
 ---
 
 ### 2. Entrenamiento
@@ -57,32 +81,20 @@ ArbolColores arbol = new ArbolColores("src/ImagenEntrenamiento/Wikipedia");
 arbol.obtenerTodaRaizes(0);
 ```
 
-- El sistema analiza todas las imágenes
-- Aprende los colores presentes
-- El parámetro indica el umbral mínimo de aparición de un color
-
-Ejemplo:
-- `0` → no se elimina ningún color
-- `10` → elimina colores poco frecuentes (<10%)
+- Aprende los colores de las zonas marcadas
+- Permite filtrar colores poco relevantes
 
 ---
 
-### 3. Guardado de datos
+### 3. Guardado
 
 ```java
 arbol.guardarDatos();
 ```
 
-- Guarda el modelo aprendido
-- Ruta de salida:
-
-```
-Wikipedia/Ficheros
-```
-
 ---
 
-### 4. Análisis de nuevas imágenes
+### 4. Evaluación con nueva imagen
 
 ```java
 BufferedImage entrada;
@@ -97,70 +109,65 @@ try {
 }
 ```
 
-- Se carga una imagen nueva
-- Se aplica el modelo entrenado
-- Se realiza la detección de colores
+---
+
+## ⚙️ Funcionamiento interno
+
+1. Se cargan imagen y máscara
+2. Se filtran píxeles según la máscara (blanco = válido)
+3. Se aplican técnicas de lógica difusa para interpretar colores
+4. Se construye un árbol de decisión (`ArbolColores`)
+5. Se eliminan colores poco representativos
+6. Se guarda el modelo
+7. Se aplica a nuevas imágenes
 
 ---
 
-## 🧠 Funcionamiento interno
+## 🔍 `Main.java`
 
-El sistema sigue este proceso:
+Coordina todo el flujo:
 
-1. **Lectura de imágenes de entrenamiento**
-2. **Extracción de información de píxeles**
-3. **Aplicación de lógica difusa**
-   - Permite manejar transiciones suaves entre colores
-   - Evita clasificaciones rígidas (ej: rojo vs naranja)
-4. **Construcción de un árbol de decisión (`ArbolColores`)**
-   - Organiza los colores aprendidos
-   - Facilita la clasificación posterior
-5. **Filtrado de ruido**
-   - Eliminación de colores poco representativos
-6. **Persistencia de datos**
-7. **Aplicación del modelo a nuevas imágenes**
+- Inicializa el sistema
+- Ejecuta entrenamiento
+- Guarda datos
+- Prueba con nuevas imágenes
 
 ---
 
-## 🔍 Rol de `Main.java`
-
-La clase `Main` actúa como orquestador del sistema:
-
-- Inicializa el modelo (`ArbolColores`)
-- Ejecuta el entrenamiento
-- Guarda los datos generados
-- Carga imágenes de prueba
-- Aplica la detección de colores
-
-No contiene lógica compleja, sino que coordina el flujo completo del programa.
-
----
-
-## 🛠️ Tecnologías utilizadas
+## 🛠️ Tecnologías
 
 - Java
-- `BufferedImage` para procesamiento de imágenes
-- Programación orientada a objetos
+- BufferedImage
 - Lógica difusa (Fuzzy Logic)
 - Árboles de decisión
+- Aprendizaje supervisado con máscara
+
+---
+
+## 💡 Características destacadas
+
+- Entrenamiento personalizado por zonas
+- Control total sobre qué aprende el modelo
+- Reducción de ruido mediante umbral
+- Sistema extensible
 
 ---
 
 ## 📌 Posibles mejoras
 
-- Visualización gráfica de resultados
-- Soporte para más formatos de imagen
-- Ajuste dinámico de parámetros fuzzy
+- Interfaz gráfica para crear máscaras
+- Visualización de resultados
+- Soporte para múltiples clases de color
 - Integración con OpenCV
 
 ---
 
 ## 📄 Licencia
 
-Proyecto orientado a aprendizaje y experimentación. Uso libre con fines educativos.
+Uso educativo y experimental.
 
 ---
 
 ## 👨‍💻 Autor
 
-Desarrollado por Ricardo Soto Gallo
+Ricardo Soto Gallo
