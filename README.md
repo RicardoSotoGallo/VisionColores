@@ -144,8 +144,8 @@ Para ello introudcimos una imagen y la mascara que indica mas o menos donde esta
 
 Pues una vez entrenado si usamos otra imagen de test saldria este resultado. En color blanco se indica que zonas a detectado con un color parecido o igual.
 <p align="center">
-  <img width="1253" height="812" alt="imgTest" src="https://github.com/user-attachments/assets/5774d144-b12c-44d0-b34f-1597c8a5816e" />
-  <img width="1253" height="812" alt="imgTrain@superEnlace" src="https://github.com/user-attachments/assets/a52f3cb7-1dad-4982-8a77-ea98f46708bb" />
+  <img width="45%" src="https://github.com/user-attachments/assets/5774d144-b12c-44d0-b34f-1597c8a5816e" />
+  <img width="45%" src="https://github.com/user-attachments/assets/a52f3cb7-1dad-4982-8a77-ea98f46708bb" />
 </p>
 
 
