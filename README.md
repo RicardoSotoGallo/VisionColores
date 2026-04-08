@@ -137,8 +137,10 @@ Coordina todo el flujo:
 ## 🖼️​ `Ejemplo con imagenes`
 Vamos a intentar entrenar los colores de las plabras con hiper enlce de wikipedia. A simple vista sabemos que es azul pero no sabemos cual es o si son varios azules distintos.
 Para ello introudcimos una imagen y la mascara que indica mas o menos donde esta el color
-<img width="965" height="822" alt="imgTrain" src="https://github.com/user-attachments/assets/14966b2f-332b-426d-9e16-ea5a29ea02c8" />
-<img width="965" height="822" alt="image" src="https://github.com/user-attachments/assets/6ab4f21a-3ac4-44bc-ae50-a458aefcacc2" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/14966b2f-332b-426d-9e16-ea5a29ea02c8" width="45%" />
+  <img src="https://github.com/user-attachments/assets/6ab4f21a-3ac4-44bc-ae50-a458aefcacc2" width="45%" />
+</p>
 
 
 
